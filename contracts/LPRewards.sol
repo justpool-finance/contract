@@ -43,13 +43,6 @@ contract LPTokenWrapper {
 contract LPRewards is LPTokenWrapper, IRewardDistributionRecipient {
     IERC20 public snx;
 
-    constructor(address _snx, address _pool)
-        public
-        LPTokenWrapper(_pool)
-    {
-        snx = IERC20(_snx);
-    }
-
     uint256 public constant DURATION = 7 days;
 
     uint256 public periodFinish = 0;
@@ -63,6 +56,13 @@ contract LPRewards is LPTokenWrapper, IRewardDistributionRecipient {
     event Staked(address indexed user, uint256 amount);
     event Withdrawn(address indexed user, uint256 amount);
     event RewardPaid(address indexed user, uint256 reward);
+
+    constructor(address _snx, address _pool)
+        public
+        LPTokenWrapper(_pool)
+    {
+        snx = IERC20(_snx);
+    }
 
     modifier updateReward(address account) {
         rewardPerTokenStored = rewardPerToken();
